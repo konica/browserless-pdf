@@ -21,21 +21,178 @@
   <div id="map"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/ol@v10.6.0/dist/ol.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/proj4@2.8.0/dist/proj4.js"></script>
   <script>
-    // Create a tile layer with OpenStreetMap
-    const osmLayer = new ol.layer.Tile({
-      source: new ol.source.OSM()
-    });
+    // Define EPSG:25832 projection (UTM Zone 32N, ETRS89)
+    proj4.defs('EPSG:25832', '+proj=utm +zone=32 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs');
+    ol.proj.proj4.register(proj4);
+
+    const mapZoomPaddingPx = 20; // Padding for zooming
+    const extent = [230000, 6025000, 905000, 6450000]; // Map extent for Denmark in EPSG:25832
+    
+    // Create a map view
+    const view = new ol.View({
+      center: [665690, 6237500],
+      extent: extent,
+      projection: 'EPSG:25832', // Use EPSG:25832 for Danish data
+      zoom: 1
+    });    
+
+    // Function to load layers from data catalog
+    async function loadLayersFromCatalog() {
+      try {
+
+        // Create layers from the catalog data using URLs from targetLayers
+        const targetLayers = [
+          'urn:dmp:ds:skaermkort-daempet',
+          'urn:dmp:ds:ortofoto-foraar-nyeste-tilgaengelige'
+        ];
+
+        // Build params object
+        const params = {
+          include: [
+            'thumbnail',
+            'wfsSource',
+            'wmsSource.legends.image',
+            'wmtsSource.legends.image',
+            'license',
+            'dataLiabilityAgreement',
+            'previewImages.image',
+            'livePreviews.previewImage',
+            'owners.thumbnail',
+            'related',
+            'tags',
+            'category.thumbnail'
+          ].join(','),
+          filter: `any(id,${targetLayers.map(id => `%27${encodeURIComponent(id)}%27`).join(',')})`,
+          locale: 'da-DK',
+          orgname: 'MST',
+          appname: 'MARS',
+          appurlname: encodeURIComponent('https://mars.sgav.dk'),
+          componentname: encodeURIComponent('@dmp/map-components')
+        };
+
+        // Build query string from params object
+        const queryString = Object.entries(params)
+          .map(([key, value]) => `${key}=${value}`)
+          .join('&');
+
+        const catalogUrl = `https://datakatalog.miljoeportal.dk/api/datasets?${queryString}`;
+
+        const response = await fetch(catalogUrl, {
+          method: 'GET'
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        
+        // Find WMS and WMTS sources in the included data
+        const wmsSources = data.included?.filter(item => item.type === 'wmsSources') || [];
+        const wmtsSources = data.included?.filter(item => item.type === 'wmtsSources') || [];
+
+        targetLayers.forEach(layerId => {
+          console.log(`Processing layer: ${layerId}`);
+          const dataset = data.data.find(item => item.id === layerId);
+          
+          if (dataset) {
+            console.log(`Found dataset: ${dataset.attributes.title}`);
+            let layer = null;
+            
+            // Try to create WMTS layer first (faster)
+            if (dataset.relationships?.wmtsSource?.data) {
+              const wmtsSourceId = dataset.relationships.wmtsSource.data.id;
+              const wmtsSource = wmtsSources.find(source => source.id === wmtsSourceId);
+              
+              if (wmtsSource) {                
+                try {
+                  // Parse extent from the wmtsSource
+                  const extentString = wmtsSource.attributes.extent;
+                  let extent = null;
+                  if (extentString) {
+                    extent = extentString.split(',').map(Number);
+                  }
+                  
+                  layer = new ol.layer.Tile({
+                    source: new ol.source.WMTS({
+                      url: wmtsSource.attributes.url,
+                      layer: wmtsSource.attributes.layer,
+                      matrixSet: wmtsSource.attributes.matrixSet,
+                      format: wmtsSource.attributes.format,
+                      style: wmtsSource.attributes.style || 'default',
+                      tileGrid: new ol.tilegrid.WMTS({
+                        origin: extent ? [extent[0], extent[3]] : [120000, 6500000], // Use extent or default
+                        resolutions: wmtsSource.attributes.resolutions.split(',').map(Number),
+                        matrixIds: wmtsSource.attributes.matrixIds.split(','),
+                        extent: extent
+                      })
+                    }),
+                    visible: true,
+                    opacity: 1.0
+                  });
+                } catch (wmtsError) {
+                  console.error(`Error creating WMTS layer: ${wmtsError.message}`);
+                }
+              }
+            }
+            
+            // Fallback to WMS if WMTS is not available
+            if (!layer && dataset.relationships?.wmsSource?.data) {
+              const wmsSourceId = dataset.relationships.wmsSource.data.id;
+              const wmsSource = wmsSources.find(source => source.id === wmsSourceId);
+              
+              if (wmsSource) {                
+                try {
+                  layer = new ol.layer.Tile({
+                    source: new ol.source.TileWMS({
+                      url: wmsSource.attributes.url,
+                      params: {
+                        'LAYERS': wmsSource.attributes.layer || layerId,
+                        'FORMAT': 'image/png',
+                        'TRANSPARENT': true,
+                        'CRS': 'EPSG:25832'
+                      },
+                      projection: 'EPSG:25832'
+                    }),
+                    visible: true,
+                    opacity: 1.0
+                  });
+                } catch (wmsError) {
+                  console.error(`Error creating WMS layer: ${wmsError.message}`);
+                }
+              }
+            }
+            
+            // Add the layer to the map if created successfully
+            if (layer) {
+              map.addLayer(layer);
+              console.log(`Successfully added layer: ${dataset.attributes.title}`);
+            } else {
+              console.warn(`Could not create layer for: ${layerId}`);
+            }
+          } else {
+            console.warn(`Dataset not found for: ${layerId}`);
+          }
+        });
+
+        console.log(`Total layers loaded: ${map.getLayers().getLength()}`);
+
+      } catch (error) {
+        console.error('Error loading layers from catalog:', error);
+      }
+    }
+
+
 
     const readyForPDF = () => {
-      return new Promise((resolve) => {
-        console.log('Waiting for map to be ready for PDF generation...');
+      return new Promise(async (resolve) => {
+        await loadLayersFromCatalog();        
         
-        // Check if map is already rendered
         if (map && map.getView() && map.getLayers().getLength() > 0) {
           // Wait for the next render complete event to ensure all layers are loaded
           map.once('rendercomplete', () => {
-            console.log('Map is ready for PDF generation');
             resolve(true);
           });
           
@@ -50,22 +207,19 @@
       });
     };
 
-    // Create a map view
-    const view = new ol.View({
-      center: ol.proj.fromLonLat([105.85, 21.03]), // Centered on Hanoi, Vietnam
-      zoom: 10
-    });
 
     // Create the map
     const map = new ol.Map({
       target: 'map',
-      layers: [osmLayer],
+      layers: [],
       view: view
     });
 
+    loadLayersFromCatalog();
+    
     // Expose map and readyForPDF to global scope for PDF generation
-    window.map = map;
-    window.readyForPDF = readyForPDF;    
+    window.map = map;    
+    window.readyForPDF = readyForPDF;
   </script>
 </body>
 </html>
