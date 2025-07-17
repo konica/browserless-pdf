@@ -21,171 +21,51 @@
   <div id="map"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/ol@v10.6.0/dist/ol.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/proj4@2.8.0/dist/proj4.js"></script>
   <script>
-    // Define EPSG:25832 projection (UTM Zone 32N, ETRS89)
-    proj4.defs('EPSG:25832', '+proj=utm +zone=32 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs');
-    ol.proj.proj4.register(proj4);
-    
+    // Create a tile layer with OpenStreetMap
+    const osmLayer = new ol.layer.Tile({
+      source: new ol.source.OSM()
+    });
+
+    const readyForPDF = () => {
+      return new Promise((resolve) => {
+        console.log('Waiting for map to be ready for PDF generation...');
+        
+        // Check if map is already rendered
+        if (map && map.getView() && map.getLayers().getLength() > 0) {
+          // Wait for the next render complete event to ensure all layers are loaded
+          map.once('rendercomplete', () => {
+            console.log('Map is ready for PDF generation');
+            resolve(true);
+          });
+          
+          // Force a re-render to trigger the event
+          map.getView().changed();
+        } else {
+          // If map isn't ready yet, wait a bit and try again
+          setTimeout(() => {
+            readyForPDF().then(resolve);
+          }, 100);
+        }
+      });
+    };
+
     // Create a map view
     const view = new ol.View({
-      center: [665690, 6237500],
-      extent: [230000, 6025000, 905000, 6450000],
-      projection: 'EPSG:25832', // Use EPSG:25832 for Danish data
-      zoom: 1
+      center: ol.proj.fromLonLat([105.85, 21.03]), // Centered on Hanoi, Vietnam
+      zoom: 10
     });
 
     // Create the map
     const map = new ol.Map({
       target: 'map',
-      layers: [],
+      layers: [osmLayer],
       view: view
     });
 
-    // Function to load layers from data catalog
-    async function loadLayersFromCatalog() {
-      try {
-        const catalogUrl = 'https://datakatalog.miljoeportal.dk/api/datasets?' +
-          'include=thumbnail,wfsSource,wmsSource.legends.image,wmtsSource.legends.image,license,dataLiabilityAgreement,previewImages.image,livePreviews.previewImage,owners.thumbnail,related,tags,category.thumbnail' +
-          '&filter=any(id,' +
-          '%27urn:dmp:ds:ortofoto-foraar-nyeste-tilgaengelige%27,' +
-          '%27urn:dmp:ds:skaermkort-daempet%27,' +
-          '%27urn:dmp:ds:lokale-treparter%27,' +
-          '%27urn:dmp:ds:kommuneinddeling%27,' +
-          '%27urn:dmp:ds:afgraensning-af-kystvandoplande%27,' +
-          '%27urn:dmp:ds:kulstof-2022-lavbundskort%27,' +
-          '%27urn:dmp:ds:jordstykker-matrikel%27,' +
-          '%27urn:dmp:dsgroup:udtagningsprojekter-samlet%27)' +
-          '&locale=da-DK&orgname=MST&appname=MARS&appurlname=https%3A%2F%2Fmars.udv.sgav.dk&componentname=%40dmp%2Fmap-components';
-
-        const response = await fetch(catalogUrl, {
-          method: 'GET',
-          headers: {
-            'Accept': '*/*',
-            'Origin': 'https://mars.udv.sgav.dk',
-            'Referer': 'https://mars.udv.sgav.dk/'
-          }
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        
-        // Create layers from the catalog data
-        const targetLayers = [
-          'urn:dmp:ds:skaermkort-daempet',
-          'urn:dmp:ds:ortofoto-foraar-nyeste-tilgaengelige'
-        ];
-
-        // Find WMS and WMTS sources in the included data
-        const wmsSources = data.included?.filter(item => item.type === 'wmsSources') || [];
-        const wmtsSources = data.included?.filter(item => item.type === 'wmtsSources') || [];
-
-        console.log('Available WMS sources:', wmsSources.length);
-        console.log('Available WMTS sources:', wmtsSources.length);
-
-        targetLayers.forEach(layerId => {
-          console.log(`Processing layer: ${layerId}`);
-          const dataset = data.data.find(item => item.id === layerId);
-          
-          if (dataset) {
-            console.log(`Found dataset: ${dataset.attributes.title}`);
-            let layer = null;
-            
-            // Try to create WMTS layer first (faster)
-            if (dataset.relationships?.wmtsSource?.data) {
-              const wmtsSourceId = dataset.relationships.wmtsSource.data.id;
-              const wmtsSource = wmtsSources.find(source => source.id === wmtsSourceId);
-              
-              if (wmtsSource) {
-                console.log(`Creating WMTS layer for: ${dataset.attributes.title}`);
-                console.log(`WMTS URL: ${wmtsSource.attributes.url}`);
-                console.log(`WMTS Layer: ${wmtsSource.attributes.layer}`);
-                try {
-                  // Parse extent from the wmtsSource
-                  const extentString = wmtsSource.attributes.extent;
-                  let extent = null;
-                  if (extentString) {
-                    extent = extentString.split(',').map(Number);
-                  }
-                  
-                  layer = new ol.layer.Tile({
-                    source: new ol.source.WMTS({
-                      url: wmtsSource.attributes.url,
-                      layer: wmtsSource.attributes.layer,
-                      matrixSet: wmtsSource.attributes.matrixSet,
-                      format: wmtsSource.attributes.format,
-                      style: wmtsSource.attributes.style || 'default',
-                      projection: 'EPSG:25832', // Use the correct projection for Danish data
-                      tileGrid: new ol.tilegrid.WMTS({
-                        origin: extent ? [extent[0], extent[3]] : [120000, 6500000], // Use extent or default
-                        resolutions: wmtsSource.attributes.resolutions.split(',').map(Number),
-                        matrixIds: wmtsSource.attributes.matrixIds.split(','),
-                        extent: extent
-                      })
-                    }),
-                    visible: true,
-                    opacity: 1.0
-                  });
-                } catch (wmtsError) {
-                  console.error(`Error creating WMTS layer: ${wmtsError.message}`);
-                }
-              }
-            }
-            
-            // Fallback to WMS if WMTS is not available
-            if (!layer && dataset.relationships?.wmsSource?.data) {
-              const wmsSourceId = dataset.relationships.wmsSource.data.id;
-              const wmsSource = wmsSources.find(source => source.id === wmsSourceId);
-              
-              if (wmsSource) {
-                console.log(`Creating WMS layer for: ${dataset.attributes.title}`);
-                console.log(`WMS URL: ${wmsSource.attributes.url}`);
-                console.log(`WMS Layer: ${wmsSource.attributes.layer}`);
-                try {
-                  layer = new ol.layer.Tile({
-                    source: new ol.source.TileWMS({
-                      url: wmsSource.attributes.url,
-                      params: {
-                        'LAYERS': wmsSource.attributes.layer || layerId,
-                        'FORMAT': 'image/png',
-                        'TRANSPARENT': true,
-                        'CRS': 'EPSG:25832'
-                      },
-                      projection: 'EPSG:25832'
-                    }),
-                    visible: true,
-                    opacity: 1.0
-                  });
-                } catch (wmsError) {
-                  console.error(`Error creating WMS layer: ${wmsError.message}`);
-                }
-              }
-            }
-            
-            // Add the layer to the map if created successfully
-            if (layer) {
-              map.addLayer(layer);
-              console.log(`Successfully added layer: ${dataset.attributes.title}`);
-            } else {
-              console.warn(`Could not create layer for: ${layerId}`);
-            }
-          } else {
-            console.warn(`Dataset not found for: ${layerId}`);
-          }
-        });
-
-        console.log(`Total layers loaded: ${map.getLayers().getLength()}`);
-
-      } catch (error) {
-        console.error('Error loading layers from catalog:', error);
-      }
-    }
-
-    // Load layers from catalog when the page loads
-    loadLayersFromCatalog();
+    // Expose map and readyForPDF to global scope for PDF generation
+    window.map = map;
+    window.readyForPDF = readyForPDF;    
   </script>
 </body>
 </html>
