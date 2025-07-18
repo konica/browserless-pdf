@@ -24,7 +24,7 @@ const generatePDF = async () => {
         format: "A4",
       },
       waitForFunction: {
-        fn: "async () => { return window.readyForPDF ? await window.readyForPDF() : false; }",
+        fn: "async () => { return window.readyForPDFFunc ? await window.readyForPDFFunc() : false; }",
         timeout: 30000, // Wait up to 30 seconds for the map to load
       },
     };
