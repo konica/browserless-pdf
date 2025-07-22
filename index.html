@@ -8,6 +8,12 @@
 <body>
     <div id="app">
         <div class="map-container"><div ref="mapContainer" id="map"></div></div>
+        <div id="map-error-container" class="error-container" style="display: none;">
+            <div class="error-message">
+                <strong>Fejl ved indlæsning af kort:</strong>
+                <span id="error-text"></span>
+            </div>
+        </div>
         <div class="info-section">
             <div class="general-info">
                 <h2>Projektinformation</h2>
@@ -267,6 +273,20 @@
         const mapZoomPaddingPx = 20; // Padding for zooming
         const extent = [230000, 6025000, 905000, 6450000]; // Map extent for Denmark in EPSG:25832
 
+        // Function to display errors in the UI
+        function showMapError(errorMessage) {
+            const errorContainer = document.getElementById('map-error-container');
+            const errorText = document.getElementById('error-text');
+            
+            if (errorContainer && errorText) {
+                errorText.textContent = errorMessage;
+                errorContainer.style.display = 'block';
+            }
+            
+            // Also log to console for debugging
+            console.error(errorMessage);
+        }
+
         // Function to load layers from data catalog
         async function loadLayersFromCatalog() {
             try {
@@ -366,9 +386,8 @@
                                         opacity: 1.0,
                                     });
                                 } catch (wmtsError) {
-                                    console.error(
-                                        `Fejl ved oprettelse af WMTS lag: ${wmtsError.message}`
-                                    );
+                                    const errorMsg = `Fejl ved oprettelse af WMTS lag: ${wmtsError.message}`;
+                                    showMapError(errorMsg);
                                 }
                             }
                         }
@@ -382,7 +401,8 @@
                     }
                 });
             } catch (error) {
-                console.error("Fejl ved indlæsning af lag fra katalog:", error);
+                const errorMsg = `Fejl ved indlæsning af lag fra katalog: ${error.message}`;
+                showMapError(errorMsg);
             }
         }
 
@@ -413,7 +433,8 @@
                     zoomMaptoExtent(map, extent);
                     resolve(true);
                 } catch (error) {
-                    console.error("Fejl ved indlæsning af projektgeometri:", error);
+                    const errorMsg = `Fejl ved indlæsning af projektgeometri: ${error.message}`;
+                    showMapError(errorMsg);
                     reject(error);
                 }
             });
@@ -459,29 +480,6 @@
                     }),
                     fill: new ol.style.Fill({
                         color: strokeNums.with(3, 0.3),
-                    }),
-                    zIndex: 2,
-                }),
-                new ol.style.Style({
-                    stroke: new ol.style.Stroke({
-                        color: whiteColor,
-                        width: 8,
-                    }),
-                    zIndex: 1,
-                }),
-            ];
-        }
-
-        function getSnapshotProjectStyle(strokeColor) {
-            return [
-                new ol.style.Style({
-                    stroke: new ol.style.Stroke({
-                        color: strokeColor,
-                        width: 3,
-                        lineDash: [15, 10],
-                    }),
-                    fill: new ol.style.Fill({
-                        color: transparentFill,
                     }),
                     zIndex: 2,
                 }),
@@ -570,13 +568,11 @@
         // Initialize the map after Vue is mounted to ensure DOM is ready
         loadLayersFromCatalog()
             .then(() => {
-                console.log("Layers loaded successfully");
                 loadProjectGeometry().then(() => {
                     if (map && map.getView() && map.getLayers().getLength() > 0) {
                         // Wait for the next render complete event to ensure all layers are loaded
                         map.once("rendercomplete", () => {
                             readyForPDF = true;
-                            console.log("Map is ready for PDF generation");
                         });
 
                         // Force a re-render to trigger the event
@@ -590,7 +586,8 @@
                 });
             })
             .catch((error) => {
-                console.error("Error loading layers:", error);
+                const errorMsg = `Fejl ved indlæsning af lag: ${error.message}`;
+                showMapError(errorMsg);
             });
     </script>
     <style type="text/css">
@@ -768,6 +765,26 @@
                 height: 16px;
                 flex-shrink: 0;
             }
+
+        /* Error container styles */
+        .error-container {
+            margin: 1rem 20px;
+            padding: 1rem;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 6px;
+            color: #721c24;
+        }
+
+        .error-message {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .error-message strong {
+            color: #721c24;
+        }
 
         /* Print styles */
         @media print {
