@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Project Report</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/ol@v10.6.0/ol.css"
+    />
+  </head>
+  <body>
+    <div id="app">
+      <div class="map-container">
+        <div ref="mapContainer" id="map"></div>
+      </div>
+      <div class="info-section">
+        <div class="general-info">
+          <h2>Project information</h2>
+          <div class="project-details">
+            <div class="info-item">
+              <strong>Name:</strong> 🥵 MST - DDH - Delete - 1
+            </div>
+            <div class="info-item"><strong>Description:</strong> N/A</div>
+            <div class="info-item"><strong>Version:</strong> 1</div>
+            <div class="info-item"><strong>Created:</strong> 2023-01-01</div>
+            <div class="info-item"><strong>Updated:</strong> 2023-01-02</div>
+            <div class="info-item">
+              <strong>Last state changed:</strong> 2023-01-03
+            </div>
+            <div class="info-item">
+              <strong>Link to Project:</strong>
+              <a
+                href="https://mars.udv.sgav.dk/projects/402a966e-6d9f-41ff-9bda-23cc55ba5d76"
+                target="_blank"
+                class="project-link"
+                >https://mars.udv.sgav.dk/projects/402a966e-6d9f-41ff-9bda-23cc55ba5d76
+              </a>
+            </div>
+            <div class="info-item">
+              <strong>Creator:</strong> USa_MST_ MARS_Planlægger (Miljøstyrelsen
+              - DK25798376)
+            </div>
+            <div class="info-item">
+              <strong>Owner:</strong> Miljøstyrelsen (DK25798376)
+            </div>
+          </div>
+        </div>
+        <div class="subsidy-scheme">
+          <h2>Subsidy scheme</h2>
+          <div class="subsidy-details">
+            <div class="info-item">
+              <strong>Name:</strong> Kvælstofvådområder
+            </div>
+            <div class="info-item">
+              <strong>Description:</strong> Du kan søge tilskud til at lave et
+              kvælstofvådområde under Styrelsen for Grøn Arealomlægning og
+              Vandmiljøs ordning til Vand- og Klimaprojekter. Et
+              kvælstofvådområde har til formål at genskabe naturlige
+              vandforhold, så udledningen af kvælstof til vores kystvande,
+              fjorde og søer mindskes. Kvælstofvådområdeordningen kan søges af
+              kommuner og Naturstyrelsen, som gennemfører projekterne gennem
+              frivillige aftaler med lodsejere.
+            </div>
+            <div class="info-item"><strong>Organization:</strong> SGAV</div>
+            <div class="info-item"><strong>Owner VAT:</strong> DK20814616</div>
+            <div class="info-item"><strong>Active:</strong> Yes</div>
+            <div class="info-item">
+              <strong>URL:</strong>
+              <a
+                href="https://sgavmst.dk/tilskud/tilskud-til-vand-og-klimaprojekter/kvaelstof-og-fosforvaadomraader"
+                target="_blank"
+                class="project-link"
+                >https://sgavmst.dk/tilskud/tilskud-til-vand-og-klimaprojekter/kvaelstof-og-fosforvaadomraader
+              </a>
+            </div>
+            <div class="info-item">
+              <strong>Mitigation measure:</strong> Kvælstofvådområder
+            </div>
+          </div>
+        </div>
+        <div class="project-effects">
+          <h2>Project Effects</h2>
+          <div class="effects-details">
+            <div class="info-item">
+              <strong>Nitrogen reduction:</strong> 0.971 tons
+            </div>
+            <div class="info-item">
+              <strong>Extraction effort:</strong> 27.58 ha
+            </div>
+            <div class="info-item">
+              <strong>Afforestation effort:</strong> 0.25 ha
+            </div>
+          </div>
+        </div>
+        <div class="forest">
+          <h2>Forest</h2>
+          <div class="forest-details">
+            <table class="forest-table">
+              <thead>
+                <tr>
+                  <th>BFE nummer</th>
+                  <th>Matrikelnummer</th>
+                  <th>Areal</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>9065681</td>
+                  <td>1a</td>
+                  <td>0,2 ha</td>
+                </tr>
+                <tr>
+                  <td>9065681</td>
+                  <td>1o</td>
+                  <td>1 ha</td>
+                </tr>
+                <tr>
+                  <td>9065681</td>
+                  <td>1p</td>
+                  <td>0,6 ha</td>
+                </tr>
+                <tr>
+                  <td>9065682</td>
+                  <td>1b</td>
+                  <td>0,2 ha</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="untouched-forest">
+          <h2>Untouched forest</h2>
+          <div class="untouched-forest-details">
+            <table class="forest-table">
+              <thead>
+                <tr>
+                  <th>BFE nummer</th>
+                  <th>Matrikelnummer</th>
+                  <th>Areal</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>9065681</td>
+                  <td>1a</td>
+                  <td>0,2 ha</td>
+                </tr>
+                <tr>
+                  <td>9065681</td>
+                  <td>1o</td>
+                  <td>1 ha</td>
+                </tr>
+                <tr>
+                  <td>9065681</td>
+                  <td>1p</td>
+                  <td>0,6 ha</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="potential-analysis">
+          <h2 class="potential-analysis-title">Potential analysis</h2>
+          <div class="analysis-wrapper">
+            <div class="analysis-section">
+              <h3 class="analysis-title">Potentials</h3>
+              <div class="analysis-content">
+                <div class="analysis-row">
+                  <div class="analysis-col">
+                    <div class="analysis-group">
+                      <div class="group-header">
+                        <div class="group-icon">
+                          <img
+                            src="data:image/svg+xml,%3Csvg%20width%3D%2232%22%20height%3D%2232%22%20viewBox%3D%220%200%2032%2032%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%224%22%20fill%3D%22%230B2D3B%22%2F%3E%3Cpath%20d%3D%22M15.9998%2023.5C17.4726%2022.785%2021.521%2020.9334%2021.521%2015.5273H10.4785C10.4785%2020.9344%2014.4975%2022.785%2015.9998%2023.5ZM20.0158%2010.5007H16.8629C16.9655%2010.2103%2017.127%209.94397%2017.3371%209.71821C17.3815%209.66844%2017.4155%209.61038%2017.4372%209.54741C17.4588%209.48444%2017.4678%209.41781%2017.4634%209.35138C17.459%209.28496%2017.4414%209.22006%2017.4116%209.16046C17.3819%209.10086%2017.3405%209.04774%2017.29%209.00418L16.9365%208.64912C16.8878%208.5994%2016.8292%208.56045%2016.7644%208.53483C16.6996%208.50922%2016.6301%208.4975%2016.5604%208.50044C16.4927%208.50358%2016.4262%208.52006%2016.3648%208.54893C16.3035%208.57781%2016.2485%208.61851%2016.203%208.66868C15.7409%209.18905%2015.4231%209.82053%2015.281%2010.5007H11.9848C11.5901%2010.4989%2011.1991%2010.5754%2010.8345%2010.7257C10.4699%2010.8761%2010.139%2011.0974%209.86119%2011.3766C9.58338%2011.6558%209.36421%2011.9873%209.21647%2012.3518C9.06874%2012.7164%208.99541%2013.1066%209.00076%2013.4996C8.99556%2013.63%209.01703%2013.76%209.06389%2013.8819C9.11074%2014.0037%209.18199%2014.1147%209.27329%2014.2082C9.3646%2014.3018%209.47405%2014.3758%209.59499%2014.4258C9.71593%2014.4759%209.84583%2014.5009%209.97678%2014.4993H22.0238C22.154%2014.4985%2022.2829%2014.472%2022.4027%2014.4211C22.5226%2014.3703%2022.6311%2014.2962%2022.722%2014.2031C22.8128%2014.1101%2022.8842%2014%2022.9319%2013.8792C22.9795%2013.7584%2023.0026%2013.6294%2022.9998%2013.4996C23.0011%2012.7084%2022.688%2011.9489%2022.1288%2011.387C21.5697%2010.825%2020.81%2010.5064%2020.0158%2010.5007Z%22%20fill%3D%22white%22%2F%3E%3C%2Fsvg%3E"
+                            alt="Biodiversity"
+                          />
+                        </div>
+                        <h4 class="group-title">Biodiversitet og natur</h4>
+                      </div>
+                      <p class="group-description">
+                        Dit projekt bidrager til øget biodiversitet, større
+                        naturområder og naturtyper.
+                      </p>
+                      <ul class="check-list">
+                        <li>
+                          <label>
+                            <input type="checkbox" />
+                            Biodiversitetsprioriteringskort
+                          </label>
+                        </li>
+                        <li>
+                          <label>
+                            <input type="checkbox" /> Store naturområder,
+                            prioritering 1 (KU)
+                          </label>
+                        </li>
+                        <li>
+                          <label>
+                            <input type="checkbox" /> Forslag til 30% beskyttede
+                            naturområder (DCE)
+                          </label>
+                        </li>
+                        <li>
+                          <label>
+                            <input type="checkbox" /> Beskyttede naturtyper
+                          </label>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="analysis-col">
+                    <div class="analysis-group">
+                      <div class="group-header">
+                        <div class="group-icon">
+                          <img
+                            src="data:image/svg+xml,%3Csvg%20width%3D%2232%22%20height%3D%2232%22%20viewBox%3D%220%200%2032%2032%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%224%22%20fill%3D%22%230B2D3B%22%2F%3E%3Cpath%20d%3D%22M16%2022.5C19.5899%2022.5%2022.5%2019.5899%2022.5%2016C22.5%2012.4101%2019.5899%209.5%2016%209.5C12.4101%209.5%209.5%2012.4101%209.5%2016C9.5%2019.5899%2012.4101%2022.5%2016%2022.5Z%22%20stroke%3D%22white%22%20stroke-width%3D%222%22%20stroke-miterlimit%3D%2210%22%2F%3E%3Cpath%20d%3D%22M16%2022.5C17.6569%2022.5%2019%2019.5899%2019%2016C19%2012.4101%2017.6569%209.5%2016%209.5C14.3431%209.5%2013%2012.4101%2013%2016C13%2019.5899%2014.3431%2022.5%2016%2022.5Z%22%20stroke%3D%22white%22%20stroke-width%3D%222%22%20stroke-miterlimit%3D%2210%22%2F%3E%3Cpath%20d%3D%22M10%2013.5L22%2013.5%22%20stroke%3D%22white%22%20stroke-width%3D%222%22%20stroke-miterlimit%3D%2210%22%2F%3E%3Cpath%20d%3D%22M10%2018.5L22%2018.5%22%20stroke%3D%22white%22%20stroke-width%3D%222%22%20stroke-miterlimit%3D%2210%22%2F%3E%3C%2Fsvg%3E"
+                            alt="CO2"
+                          />
+                        </div>
+                        <h4 class="group-title">CO₂ potentialer</h4>
+                      </div>
+                      <p class="group-description">
+                        Dit projekt bidrager med CO₂ reduktion.
+                      </p>
+                      <ul class="check-list">
+                        <li>
+                          <label>
+                            <input type="checkbox" /> Kulstof 2022 3-6% tørv
+                          </label>
+                        </li>
+                        <li>
+                          <label>
+                            <input type="checkbox" /> Kulstof 2022
+                            (lavbundskort)
+                          </label>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="analysis-row">
+                  <div class="analysis-col">
+                    <div class="analysis-group">
+                      <div class="group-header">
+                        <div class="group-icon">
+                          <img
+                            src="data:image/svg+xml,%3Csvg%20width%3D%2232%22%20height%3D%2232%22%20viewBox%3D%220%200%2032%2032%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%224%22%20fill%3D%22%230B2D3B%22%2F%3E%3Cpath%20d%3D%22M16.4688%2011.359C14.166%2011.359%2012.2178%2012.8532%2011.5557%2014.9131C12.54%2014.4199%2013.6504%2014.1443%2014.8281%2014.1443H17.4062C17.6641%2014.1443%2017.875%2014.3532%2017.875%2014.6085C17.875%2014.8638%2017.6641%2015.0727%2017.4062%2015.0727H16.9375H14.8281C14.3418%2015.0727%2013.8701%2015.1278%2013.416%2015.2293C12.6572%2015.4005%2011.9512%2015.7052%2011.3242%2016.12C9.62207%2017.2428%208.5%2019.1606%208.5%2021.3395V21.8037C8.5%2022.1896%208.81348%2022.5%209.20312%2022.5C9.59277%2022.5%209.90625%2022.1896%209.90625%2021.8037V21.3395C9.90625%2019.9265%2010.5127%2018.6558%2011.4824%2017.7651C12.0625%2019.9556%2014.0752%2021.5716%2016.4688%2021.5716H16.498C20.3682%2021.5513%2023.5%2017.7738%2023.5%2013.1172C23.5%2011.8812%2023.2803%2010.7062%2022.8818%209.64725C22.8057%209.44706%2022.5098%209.45576%2022.4072%209.64435C21.8564%2010.6656%2020.7666%2011.359%2019.5156%2011.359H16.4688Z%22%20fill%3D%22white%22%2F%3E%3C%2Fsvg%3E"
+                            alt="Nutrients"
+                          />
+                        </div>
+                        <h4 class="group-title">Næringsstoffer</h4>
+                      </div>
+                      <p class="group-description">
+                        Dit projekt bidrager med tilbageholdelse af
+                        nærringstoffer.
+                      </p>
+                      <ul class="check-list">
+                        <li>
+                          <label>
+                            <input type="checkbox" /> Kvælstofretention, version
+                            2025
+                          </label>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="analysis-section">
+              <h3 class="analysis-title">Konflikter</h3>
+              <div class="analysis-content">
+                <div class="analysis-row">
+                  <div class="analysis-col">
+                    <div class="analysis-group">
+                      <div class="group-header">
+                        <div class="group-icon">
+                          <img
+                            src="data:image/svg+xml,%3Csvg%20width%3D%2232%22%20height%3D%2232%22%20viewBox%3D%220%200%2032%2032%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%224%22%20fill%3D%22%238C3D0F%22%2F%3E%3Cpath%20d%3D%22M16%208C16.1438%208%2016.2875%208.03125%2016.4188%208.09063L22.3031%2010.5875C22.9906%2010.8781%2023.5031%2011.5563%2023.5%2012.375C23.4844%2015.475%2022.2094%2021.1469%2016.825%2023.725C16.3031%2023.975%2015.6969%2023.975%2015.175%2023.725C9.79064%2021.1469%208.51564%2015.475%208.50001%2012.375C8.49689%2011.5563%209.00939%2010.8781%209.69689%2010.5875L15.5844%208.09063C15.7125%208.03125%2015.8563%208%2016%208Z%22%20fill%3D%22white%22%2F%3E%3C%2Fsvg%3E"
+                            alt="Protected areas"
+                          />
+                        </div>
+                        <h4 class="group-title">Fredninger</h4>
+                      </div>
+                      <p class="group-description">
+                        Projektet overlapper med fredede eller beskyttede
+                        arealer.
+                      </p>
+                      <ul class="check-list">
+                        <li>
+                          <label>
+                            <input type="checkbox" /> Fredede områder
+                          </label>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/ol@v10.6.0/dist/ol.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/proj4@2.8.0/dist/proj4.js"></script>
+    <script>
+      // Declare the project variable
+      const project = {
+        mitigationColor: "rgba(0, 61, 35, 1)", // Example color for the project
+        geometryWkt:
+          "MULTIPOLYGON (((536848.5353188185 6346864.170815518, 535613.6147526584 6347336.0288243815, 536478.9213975612 6348476.804757819, 537180.4315420579 6348292.5509164715, 536848.5353188185 6346864.170815518)))",
+        snapshotGeometryWkt:
+          "MULTIPOLYGON (((536618.7629581506 6347131.985142916, 535899.5790435629 6347431.573652884, 536478.9213975612 6348476.804757819, 537138.1733192666 6348110.641003096, 536618.7629581506 6347131.985142916)))",
+      };
+
+      // Define EPSG:25832 projection (UTM Zone 32N, ETRS89)
+      proj4.defs(
+        "EPSG:25832",
+        "+proj=utm +zone=32 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"
+      );
+      ol.proj.proj4.register(proj4);
+
+      const mapZoomPaddingPx = 20; // Padding for zooming
+      const extent = [230000, 6025000, 905000, 6450000]; // Map extent for Denmark in EPSG:25832
+
+      // Function to load layers from data catalog
+      async function loadLayersFromCatalog() {
+        try {
+          // Create layers from the catalog data using URLs from targetLayers
+          const targetLayers = ["urn:dmp:ds:skaermkort-daempet"];
+
+          // Build params object
+          const params = {
+            include: [
+              "thumbnail",
+              "wfsSource",
+              "wmsSource.legends.image",
+              "wmtsSource.legends.image",
+              "license",
+              "dataLiabilityAgreement",
+              "previewImages.image",
+              "livePreviews.previewImage",
+              "owners.thumbnail",
+              "related",
+              "tags",
+              "category.thumbnail",
+            ].join(","),
+            filter: `any(id,${targetLayers
+              .map((id) => `%27${encodeURIComponent(id)}%27`)
+              .join(",")})`,
+            locale: "da-DK",
+            orgname: "MST",
+            appname: "MARS",
+            appurlname: encodeURIComponent("https://mars.sgav.dk"),
+            componentname: encodeURIComponent("@dmp/map-components"),
+          };
+
+          // Build query string from params object
+          const queryString = Object.entries(params)
+            .map(([key, value]) => `${key}=${value}`)
+            .join("&");
+
+          const catalogUrl = `https://datakatalog.miljoeportal.dk/api/datasets?${queryString}`;
+
+          const response = await fetch(catalogUrl, {
+            method: "GET",
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const data = await response.json();
+
+          // Find WMS and WMTS sources in the included data
+          const wmsSources =
+            data.included?.filter((item) => item.type === "wmsSources") || [];
+          const wmtsSources =
+            data.included?.filter((item) => item.type === "wmtsSources") || [];
+
+          targetLayers.forEach((layerId) => {
+            console.log(`Processing layer: ${layerId}`);
+            const dataset = data.data.find((item) => item.id === layerId);
+
+            if (dataset) {
+              console.log(`Found dataset: ${dataset.attributes.title}`);
+              let layer = null;
+
+              // Try to create WMTS layer first (faster)
+              if (dataset.relationships?.wmtsSource?.data) {
+                const wmtsSourceId = dataset.relationships.wmtsSource.data.id;
+                const wmtsSource = wmtsSources.find(
+                  (source) => source.id === wmtsSourceId
+                );
+
+                if (wmtsSource) {
+                  try {
+                    // Parse extent from the wmtsSource
+                    const extentString = wmtsSource.attributes.extent;
+                    let extent = null;
+                    if (extentString) {
+                      extent = extentString.split(",").map(Number);
+                    }
+
+                    layer = new ol.layer.Tile({
+                      source: new ol.source.WMTS({
+                        url: wmtsSource.attributes.url,
+                        layer: wmtsSource.attributes.layer,
+                        matrixSet: wmtsSource.attributes.matrixSet,
+                        format: wmtsSource.attributes.format,
+                        style: wmtsSource.attributes.style || "default",
+                        tileGrid: new ol.tilegrid.WMTS({
+                          origin: extent
+                            ? [extent[0], extent[3]]
+                            : [120000, 6500000], // Use extent or default
+                          resolutions: wmtsSource.attributes.resolutions
+                            .split(",")
+                            .map(Number),
+                          matrixIds: wmtsSource.attributes.matrixIds.split(","),
+                          extent: extent,
+                        }),
+                      }),
+                      visible: true,
+                      opacity: 1.0,
+                    });
+                  } catch (wmtsError) {
+                    console.error(
+                      `Error creating WMTS layer: ${wmtsError.message}`
+                    );
+                  }
+                }
+              }
+
+              // Add the layer to the map if created successfully
+              if (layer) {
+                map.addLayer(layer);
+                console.log(
+                  `Successfully added layer: ${dataset.attributes.title}`
+                );
+              } else {
+                console.warn(`Could not create layer for: ${layerId}`);
+              }
+            } else {
+              console.warn(`Dataset not found for: ${layerId}`);
+            }
+          });
+
+          console.log(`Total layers loaded: ${map.getLayers().getLength()}`);
+        } catch (error) {
+          console.error("Error loading layers from catalog:", error);
+        }
+      }
+
+      async function loadProjectGeometry() {
+        return new Promise(async (resolve, reject) => {
+          try {
+            // Parse the WKT geometry for the main project geometry
+            const wktFormat = new ol.format.WKT();
+            const geometry = wktFormat.readGeometry(project.geometryWkt, {
+              dataProjection: "EPSG:25832",
+              featureProjection: "EPSG:25832",
+            });
+
+            const mitigationColor = project.mitigationColor;
+            // Create a vector layer for the project geometry
+            const projectLayer = new ol.layer.Vector({
+              source: new ol.source.Vector({
+                features: [new ol.Feature(geometry)],
+              }),
+              zIndex: 1010,
+              style: getProjectStyle(mitigationColor),
+            });
+
+            map.addLayer(projectLayer);
+
+            // Zoom to the extent of the project geometry
+            const extent = geometry.getExtent();
+            zoomMaptoExtent(map, extent);
+            resolve(true);
+          } catch (error) {
+            console.error("Error loading project geometry:", error);
+            reject(error);
+          }
+        });
+      }
+
+      function zoomMaptoExtent(map, extent) {
+        map.getView().fit(extent, {
+          minResolution: 0.2,
+          padding: [
+            mapZoomPaddingPx,
+            mapZoomPaddingPx,
+            mapZoomPaddingPx,
+            mapZoomPaddingPx,
+          ],
+          duration: 0,
+          nearest: true,
+        });
+      }
+      // #endregion
+
+      // #region Style Management
+
+      const defaultStrokeWidth = 2;
+      const whiteStrokeWidth = 6;
+      const hoverOpacity = 0.5; // 0.5 default hover opacity
+      const selectedOpacity = 0.2; // 0.2 default select opacity
+
+      const whiteColor = [255, 255, 255, 1];
+      const transparentFill = [0, 255, 255, 0];
+      const defaultStrokeColor = [23, 94, 123, 1];
+      const modifyPointColor = [40, 120, 118, 0.3];
+      const projectNoVirkemiddelColor = [11, 45, 59, 1];
+      const defaultFillColor = defaultStrokeColor.with(3, 0.05);
+
+      function getProjectStyle(color) {
+        const strokeNums =
+          typeof color === "string" ? ol.color.fromString(color) : color;
+        return [
+          new ol.style.Style({
+            stroke: new ol.style.Stroke({
+              color: strokeNums,
+              width: 3,
+            }),
+            fill: new ol.style.Fill({
+              color: strokeNums.with(3, 0.3),
+            }),
+            zIndex: 2,
+          }),
+          new ol.style.Style({
+            stroke: new ol.style.Stroke({
+              color: whiteColor,
+              width: 8,
+            }),
+            zIndex: 1,
+          }),
+        ];
+      }
+
+      function getSnapshotProjectStyle(strokeColor) {
+        return [
+          new ol.style.Style({
+            stroke: new ol.style.Stroke({
+              color: strokeColor,
+              width: 3,
+              lineDash: [15, 10],
+            }),
+            fill: new ol.style.Fill({
+              color: transparentFill,
+            }),
+            zIndex: 2,
+          }),
+          new ol.style.Style({
+            stroke: new ol.style.Stroke({
+              color: whiteColor,
+              width: 8,
+            }),
+            zIndex: 1,
+          }),
+        ];
+      }
+
+      // #endregion
+      async function readyForPDFFunc(timeoutMs = 30000) {
+        return new Promise((resolve, reject) => {
+          // Check if already ready
+          if (readyForPDF) {
+            resolve(true);
+            return;
+          }
+
+          let timeoutId = null;
+          let intervalId = null;
+          let startTime = Date.now();
+
+          // Cleanup function to prevent memory leaks
+          const cleanup = () => {
+            if (timeoutId) {
+              clearTimeout(timeoutId);
+              timeoutId = null;
+            }
+            if (intervalId) {
+              clearInterval(intervalId);
+              intervalId = null;
+            }
+          };
+
+          // Set up timeout to prevent infinite waiting
+          timeoutId = setTimeout(() => {
+            cleanup();
+            reject(new Error(`readyForPDF timeout after ${timeoutMs}ms`));
+          }, timeoutMs);
+
+          // Use setInterval instead of recursive setTimeout for better performance
+          intervalId = setInterval(() => {
+            if (readyForPDF) {
+              cleanup();
+              resolve(true);
+            } else {
+              // Additional safety check for elapsed time
+              const elapsed = Date.now() - startTime;
+              if (elapsed >= timeoutMs) {
+                cleanup();
+                reject(new Error(`readyForPDF timeout after ${elapsed}ms`));
+              }
+            }
+          }, 100);
+        });
+      }
+
+      // Create the map variable (will be initialized in Vue)
+      let map;
+      let readyForPDF = false;
+
+      // Expose map and readyForPDFFunc to global scope for PDF generation
+      window.readyForPDFFunc = readyForPDFFunc;
+
+      // Create a map view
+      const view = new ol.View({
+        center: [665690, 6237500],
+        extent: extent,
+        projection: "EPSG:25832", // Use EPSG:25832 for Danish data
+        zoom: 1,
+      });
+
+      map = new ol.Map({
+        target: "map",
+        layers: [],
+        view: view,
+      });
+
+      // Expose map to global scope for PDF generation
+      window.map = map;
+
+      // Initialize the map after Vue is mounted to ensure DOM is ready
+      loadLayersFromCatalog()
+        .then(() => {
+          console.log("Layers loaded successfully");
+          loadProjectGeometry().then(() => {
+            if (map && map.getView() && map.getLayers().getLength() > 0) {
+              // Wait for the next render complete event to ensure all layers are loaded
+              map.once("rendercomplete", () => {
+                readyForPDF = true;
+                console.log("Map is ready for PDF generation");
+              });
+
+              // Force a re-render to trigger the event
+              map.getView().changed();
+            } else {
+              // If map isn't ready yet, wait a bit and try again
+              setTimeout(() => {
+                readyForPDF().then(resolve);
+              }, 100);
+            }
+          });
+        })
+        .catch((error) => {
+          console.error("Error loading layers:", error);
+        });
+    </script>
+    <style type="text/css">
+      /* Reset and base styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, sans-serif;
+        line-height: 1.6;
+        color: #333;
+      }
+
+      #app {
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Map styles */
+      .map-container {
+        width: 100%;
+      }
+
+      #map {
+        width: 100%;
+        height: 300px;
+      }
+
+      /* Info section styles */
+      .info-section {
+        margin-top: 1rem;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+      }     
+
+      .project-details,
+      .subsidy-details,
+      .effects-details,
+      .forest-details,
+      .untouched-forest-details,
+      .analysis-wrapper {
+        margin-bottom: 2rem;
+      }
+
+      .info-item {
+        margin-bottom: 0.5rem;
+        line-height: 1.5;
+      }
+
+      .info-item strong {
+        font-weight: 600;
+        color: #212529;
+      }
+
+      .description-box {
+        margin-top: 0.25rem;
+        padding: 0.5rem;
+        border-radius: 4px;
+      }
+
+      /* Table styles */
+      .forest-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 0.5rem;
+      }
+
+      .forest-table th,
+      .forest-table td {
+        padding: 8px 12px;
+        text-align: left;
+        border: 1px solid #ddd;
+      }
+
+      .forest-table th {
+        background-color: #f8f9fa;
+        font-weight: 600;
+        color: #212529;
+      }
+
+      .forest-table tbody tr:nth-child(even) {
+        background-color: #f8f9fa;
+      }
+
+      .forest-table tbody tr:hover {
+        background-color: #e9ecef;
+      }
+
+      /* Analysis section styles */
+
+      .analysis-section {
+        margin-bottom: 2rem;
+      }
+
+      .analysis-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: #212529;
+      }
+
+      .analysis-content {
+        margin-top: 1rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+
+      .analysis-row {
+        display: contents;
+      }
+
+      .analysis-group {
+        padding: 1rem;
+        background-color: white;
+        border-radius: 6px;
+        border: 1px solid #e9ecef;
+        height: 100%;
+      }
+
+      .group-header {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .group-icon {
+        flex-shrink: 0;
+      }
+
+      .group-icon img {
+        width: 32px;
+        height: 32px;
+      }
+
+      .group-title {
+        font-size: 1rem;
+        font-weight: 600;
+        margin: 0;
+        flex: 1;
+      }
+
+      .group-description {
+        font-size: 0.875rem;
+        color: #6c757d;
+        margin-bottom: 0.75rem;
+      }
+
+      .check-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .check-list li {
+        margin-bottom: 0.5rem;
+      }
+
+      .check-list label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+        cursor: pointer;
+      }
+
+      .check-list input[type="checkbox"] {
+        margin: 0;
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+      }
+
+      /* Print styles */
+      @media print {
+        .potential-analysis-title {
+          page-break-before: always;
+        }
+      }
+    </style>
+  </body>
+</html>
