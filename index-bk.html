@@ -635,15 +635,29 @@
       window.map = map;
 
       // Initialize the map after Vue is mounted to ensure DOM is ready
+      const initStartTime = performance.now();
+      console.log('Starting map initialization...');
+      
       loadLayersFromCatalog()
         .then(() => {
-          console.log("Layers loaded successfully");
+          const layersEndTime = performance.now();
+          console.log(`Layers loaded successfully in ${(layersEndTime - initStartTime).toFixed(2)}ms`);
+          
+          const geometryStartTime = performance.now();
           loadProjectGeometry().then(() => {
+            const geometryEndTime = performance.now();
+            console.log(`Project geometry loaded in ${(geometryEndTime - geometryStartTime).toFixed(2)}ms`);
+            
             if (map && map.getView() && map.getLayers().getLength() > 0) {
+              const renderStartTime = performance.now();
               // Wait for the next render complete event to ensure all layers are loaded
               map.once("rendercomplete", () => {
+                const renderEndTime = performance.now();
+                const totalTime = renderEndTime - initStartTime;
+                
                 readyForPDF = true;
-                console.log("Map is ready for PDF generation");
+                console.log(`Map rendering completed in ${(renderEndTime - renderStartTime).toFixed(2)}ms`);
+                console.log(`Map is ready for PDF generation - Total initialization time: ${totalTime.toFixed(2)}ms`);
               });
 
               // Force a re-render to trigger the event
@@ -657,7 +671,8 @@
           });
         })
         .catch((error) => {
-          console.error("Error loading layers:", error);
+          const errorTime = performance.now() - initStartTime;
+          console.error(`Error loading layers after ${errorTime.toFixed(2)}ms:`, error);
         });
     </script>
     <style type="text/css">
