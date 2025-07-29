@@ -308,11 +308,8 @@
     <script>
       // Declare the project variable
       const project = {
-        mitigationColor: "rgba(0, 61, 35, 1)", // Example color for the project
-        geometryWkt:
-          "MULTIPOLYGON (((536848.5353188185 6346864.170815518, 535613.6147526584 6347336.0288243815, 536478.9213975612 6348476.804757819, 537180.4315420579 6348292.5509164715, 536848.5353188185 6346864.170815518)))",
-        snapshotGeometryWkt:
-          "MULTIPOLYGON (((536618.7629581506 6347131.985142916, 535899.5790435629 6347431.573652884, 536478.9213975612 6348476.804757819, 537138.1733192666 6348110.641003096, 536618.7629581506 6347131.985142916)))",
+        mitigationColor: "rgba(3, 129, 121, 1)", 
+        geometryWkt: "MULTIPOLYGON (((536848.5353188185 6346864.170815518, 535613.6147526584 6347336.0288243815, 535688.7757056553 6348760.321605125, 537180.4315420579 6348292.5509164715, 536848.5353188185 6346864.170815518)))",        
       };
 
       // Define EPSG:25832 projection (UTM Zone 32N, ETRS89)
@@ -522,19 +519,19 @@
           new ol.style.Style({
             stroke: new ol.style.Stroke({
               color: strokeNums,
-              width: 3,
-            }),
+              width: 2,
+            }),            
             fill: new ol.style.Fill({
               color: strokeNums.with(3, 0.3),
             }),
-            zIndex: 2,
-          }),
+            zIndex: 3,
+          }),          
           new ol.style.Style({
             stroke: new ol.style.Stroke({
               color: whiteColor,
-              width: 8,
+              width: 6,
             }),
-            zIndex: 1,
+            zIndex: 2,
           }),
         ];
       }
@@ -704,6 +701,11 @@
         width: 100%;
         height: 300px;
       }
+
+      .ol-zoom {
+        display: none;        
+      }
+
 
       /* Info section styles */
       .info-section {

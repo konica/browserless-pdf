@@ -1,0 +1,566 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Projektrapport</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v10.6.0/ol.css" />
+</head>
+<body>
+    <div id="app">
+        <section class="map-container"><div ref="mapContainer" id="map"></div></section>
+        <section id="map-error-container" class="error-container" style="display: none">
+            <div class="error-message">
+                <strong>Fejl ved indlæsning af kort:</strong>
+                <span id="error-text"></span>
+            </div>
+        </section>
+        <section class="info-section">
+            <section>
+                <h2>Projektinformation</h2>
+                <div class="detail-section">
+                    <div class="info-item"><strong>Navn:</strong> {{ProjectName}}</div>
+                    <div class="info-item"><strong>Beskrivelse:</strong> {{ProjectDescription}}</div>
+                    <div class="info-item"><strong>Version:</strong> {{ProjectReportVersion}}</div>
+                    <div class="info-item"><strong>Tilskudsordning:</strong> {{ProjectSubsidyScheme}}</div>
+                    <div class="info-item"><strong>Ansøger/ejer:</strong> {{ProjectOwner}}</div>
+                    <div class="info-item"><strong>Oprettet:</strong> {{ProjectCreated}}</div>
+                    <div class="info-item"><strong>Opdateret:</strong> {{ProjectUpdated}}</div>
+                    <div class="info-item">
+                        <strong>Link til projekt:</strong>
+                        <a href="{{ProjectLink}}" target="_blank" class="project-link">{{ProjectLink}}</a>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <h2>Projekteffekter</h2>
+                <div class="detail-section">
+                    <div class="info-item"><strong>Kvælstofreduktion:</strong> {{ProjectNitrogenReduction}} ton</div>
+                    <div class="info-item"><strong>Ekstraktionsindsats:</strong> {{ProjectExtractionEffort}} ha</div>
+                    <div class="info-item"><strong>Skovrejsningsindsats:</strong> {{ProjectAfforestationEffort}} ha</div>
+                </div>
+            </section>
+            <section>
+                <h2>Overlapningsanalyse</h2>
+                <div class="detail-section">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>Samlet tilskudsberettigede areal (ha)</td>
+                                <td>{{ReportArealerDerKanOpnaaTilskudIAltHa}} ha</td>
+                            </tr>
+                            <tr>
+                                <td>Urørt skov (ha)</td>
+                                <td>{{ReportArealerDerHenlaeggesSomUroertSkovIAltHa}} ha</td>
+                            </tr>
+                            <tr>
+                                <td>Urørt skov i tilskudsberettigede areal (ha)</td>
+                                <td>{{ReportArealerAfUroertSkovDerKanOpnaaTilskud}} ha</td>
+                            </tr>
+                            <tr>
+                                <td>Er projektarealet beliggende på kulstofrige lavbundsjorder?</td>
+                                <td>{{ReportErProjektarealetBeliggendePaaKulstofrigeLavbundsjorder}}</td>
+                            </tr>
+                            <tr>
+                                <td>Er projektarealet beliggende på arealer med potentiale for vådområder?</td>
+                                <td>{{ReportErProjektarealetBeliggendePaaArealerMedPotentialeForVaadomraader}}</td>
+                            </tr>
+                            <tr>
+                                <td>Er projektområdet beliggende i et område med et særligt højt kvælstofindsatsbehov?</td>
+                                <td>{{ReportErProjektomraadetBeliggendeIEtOmraadeMedEtSaerligtHoejtKvaelstofindsatsbehov}}</td>
+                            </tr>
+                            <tr>
+                                <td>Er projektområdet beliggende i et område med et kvælstofindsatsbehov?</td>
+                                <td>{{ReportErProjektomraadetBeliggendeIEtOmraadeMedEtKvaelstofindsatsbehov}}</td>
+                            </tr>
+                            <tr>
+                                <td>Er projektområdet beliggenhed inden for områder med særlige drikkevandsinteresser?</td>
+                                <td>{{ReportErProjektomraadetBeliggenhedIndenForOmraaderMedSaerligeDrikkevandsinteresser}}</td>
+                            </tr>
+                            <tr>
+                                <td>Er projektområdet beliggenhed inden for områder med indvindingsoplande til almene vandforsyninger udenfor OSD?</td>
+                                <td>{{ReportErProjektomraadetBeliggenhedIndenForOmraaderMedIndvindingsoplandeTilAlmeneVandforsyningerUdenforOSD}}</td>
+                            </tr>
+                            <tr>
+                                <td>Indgår der minimum 1 ha sammenhængende urørt skov i projektet?</td>
+                                <td>{{ReportIndgaarDerMinimum1HaSammenhaengendeUroertSkovIProjektet}}</td>
+                            </tr>
+                            <tr>
+                                <td>Grænser den ansøgte urørte skov op til arealer med en HNV score på mere end 8?</td>
+                                <td>{{ReportGraenserDenAnsoegteUroerteSkovOpTilArealerMedEnHnvScorePaaMereEnd8}}</td>
+                            </tr>
+                            <tr>
+                                <td>Placeres skovrejsningsprojektet i nærhed af eksisterende fredskovsarealer?</td>
+                                <td>{{ReportPlaceresSkovrejsningsprojektetINaerhedAfEksisterendeFredskovsarealer}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            <section>
+                <h2>Oplysninger for de tilskudsberettigede arealer</h2>
+                <div>
+                    <h4>Skov</h4>
+                    <div class="detail-section">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>BFE nummer</th>
+                                    <th>Matrikelnummer</th>
+                                    <th>Areal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{ReportSkovMatriker}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <h4>Urørt skov</h4>
+                    <div class="detail-section">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>BFE nummer</th>
+                                    <th>Matrikelnummer</th>
+                                    <th>Areal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{ReportUroortSkovMatriker}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/ol@v10.6.0/dist/ol.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/proj4@2.8.0/dist/proj4.js"></script>
+    <script>
+      // Declare the project variable
+      const project = {
+        mitigationColor: "rgba(3, 129, 121, 1)", 
+        geometryWkt: "MULTIPOLYGON (((536848.5353188185 6346864.170815518, 535613.6147526584 6347336.0288243815, 535688.7757056553 6348760.321605125, 537180.4315420579 6348292.5509164715, 536848.5353188185 6346864.170815518)))",        
+      }
+
+      // Define EPSG:25832 projection (UTM Zone 32N, ETRS89)
+      proj4.defs(
+        'EPSG:25832',
+        '+proj=utm +zone=32 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'
+      )
+      ol.proj.proj4.register(proj4)
+
+      const mapZoomPaddingPx = 20 // Padding for zooming
+      const extent = [230000, 6025000, 905000, 6450000] // Map extent for Denmark in EPSG:25832
+
+      // Function to display errors in the UI
+      function showMapError(errorMessage) {
+        const errorContainer = document.getElementById('map-error-container')
+        const errorText = document.getElementById('error-text')
+
+        if (errorContainer && errorText) {
+          errorText.textContent = errorMessage
+          errorContainer.style.display = 'block'
+        }
+
+        // Also log to console for debugging
+        console.error(errorMessage)
+      }
+
+      // Function to load layers from data catalog
+      async function loadLayersFromCatalog() {
+        try {
+          // Create layers from the catalog data using URLs from targetLayers
+          const targetLayers = ['urn:dmp:ds:skaermkort-daempet']
+
+          // Build params object
+          const params = {
+            include: [
+              'wfsSource',
+              'wmsSource.legends.image',
+              'wmtsSource.legends.image'
+            ].join(','),
+            filter: `any(id,${targetLayers
+              .map((id) => `%27${encodeURIComponent(id)}%27`)
+              .join(',')})`,
+            locale: 'da-DK',
+            orgname: 'MST',
+            appname: 'MARS',
+            appurlname: encodeURIComponent('https://mars.sgav.dk'),
+            componentname: encodeURIComponent('@dmp/map-components')
+          }
+
+          // Build query string from params object
+          const queryString = Object.entries(params)
+            .map(([key, value]) => `${key}=${value}`)
+            .join('&')
+
+          const catalogUrl = `https://datakatalog.miljoeportal.dk/api/datasets?${queryString}`
+
+          const response = await fetch(catalogUrl, {
+            method: 'GET'
+          })
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`)
+          }
+
+          const data = await response.json()
+
+          // Find WMS and WMTS sources in the included data
+          const wmsSources = data.included?.filter((item) => item.type === 'wmsSources') || []
+          const wmtsSources = data.included?.filter((item) => item.type === 'wmtsSources') || []
+
+          targetLayers.forEach((layerId) => {
+            const dataset = data.data.find((item) => item.id === layerId)
+
+            if (dataset) {
+              let layer = null
+
+              // Try to create WMTS layer first (faster)
+              if (dataset.relationships?.wmtsSource?.data) {
+                const wmtsSourceId = dataset.relationships.wmtsSource.data.id
+                const wmtsSource = wmtsSources.find((source) => source.id === wmtsSourceId)
+
+                if (wmtsSource) {
+                  try {
+                    // Parse extent from the wmtsSource
+                    const extentString = wmtsSource.attributes.extent
+                    let extent = null
+                    if (extentString) {
+                      extent = extentString.split(',').map(Number)
+                    }
+
+                    layer = new ol.layer.Tile({
+                      source: new ol.source.WMTS({
+                        url: wmtsSource.attributes.url,
+                        layer: wmtsSource.attributes.layer,
+                        matrixSet: wmtsSource.attributes.matrixSet,
+                        format: wmtsSource.attributes.format,
+                        style: wmtsSource.attributes.style || 'default',
+                        tileGrid: new ol.tilegrid.WMTS({
+                          origin: extent ? [extent[0], extent[3]] : [120000, 6500000], // Use extent or default
+                          resolutions: wmtsSource.attributes.resolutions.split(',').map(Number),
+                          matrixIds: wmtsSource.attributes.matrixIds.split(','),
+                          extent: extent
+                        })
+                      }),
+                      visible: true,
+                      opacity: 1.0
+                    })
+                  } catch (wmtsError) {
+                    const errorMsg = `Fejl ved oprettelse af WMTS lag: ${wmtsError.message}`
+                    showMapError(errorMsg)
+                  }
+                }
+              }
+
+              // Add the layer to the map if created successfully
+              if (layer) {
+                map.addLayer(layer)
+              }
+            } else {
+              console.warn(`Datasæt ikke fundet for: ${layerId}`)
+            }
+          })
+        } catch (error) {
+          const errorMsg = `Fejl ved indlæsning af lag fra katalog: ${error.message}`
+          showMapError(errorMsg)
+        }
+      }
+
+      async function loadProjectGeometry() {
+        return new Promise(async (resolve, reject) => {
+          try {
+            // Parse the WKT geometry for the main project geometry
+            const wktFormat = new ol.format.WKT()
+            const geometry = wktFormat.readGeometry(project.geometryWkt, {
+              dataProjection: 'EPSG:25832',
+              featureProjection: 'EPSG:25832'
+            })
+
+            const mitigationColor = project.mitigationColor
+            // Create a vector layer for the project geometry
+            const projectLayer = new ol.layer.Vector({
+              source: new ol.source.Vector({
+                features: [new ol.Feature(geometry)]
+              }),
+              zIndex: 1010,
+              style: getProjectStyle(mitigationColor)
+            })
+
+            map.addLayer(projectLayer)
+
+            // Zoom to the extent of the project geometry
+            const extent = geometry.getExtent()
+            zoomMaptoExtent(map, extent)
+            resolve(true)
+          } catch (error) {
+            const errorMsg = `Fejl ved indlæsning af projektgeometri: ${error.message}`
+            showMapError(errorMsg)
+            reject(error)
+          }
+        })
+      }
+
+      function zoomMaptoExtent(map, extent) {
+        map.getView().fit(extent, {
+          minResolution: 0.2,
+          padding: [mapZoomPaddingPx, mapZoomPaddingPx, mapZoomPaddingPx, mapZoomPaddingPx],
+          duration: 0,
+          nearest: true
+        })
+      }
+      // #endregion
+
+      // #region Style Management
+
+      const defaultStrokeWidth = 2;
+      const whiteStrokeWidth = 6;
+      const whiteColor = [255, 255, 255, 1];
+      const projectNoVirkemiddelColor = [11, 45, 59, 1];
+
+        function getProjectStyle(color) {
+            if(!color) {
+                color = projectNoVirkemiddelColor
+            }
+
+            const strokeNums =
+                typeof color === "string" ? ol.color.fromString(color) : color;
+            return [
+                new ol.style.Style({
+                    stroke: new ol.style.Stroke({
+                        color: strokeNums,
+                        width: defaultStrokeWidth,
+                    }),
+                    fill: new ol.style.Fill({
+                        color: strokeNums.with(3, 0.3),
+                    }),
+                    zIndex: 2,
+                }),
+                new ol.style.Style({
+                    stroke: new ol.style.Stroke({
+                        color: whiteColor,
+                        width: whiteStrokeWidth,
+                    }),
+                    zIndex: 1,
+                }),
+            ];
+        }
+
+      // #endregion
+      async function readyForPDFFunc(timeoutMs = 30000) {
+        return new Promise((resolve, reject) => {
+          // Check if already ready
+          if (readyForPDF) {
+            resolve(true)
+            return
+          }
+
+          let timeoutId = null
+          let intervalId = null
+          let startTime = Date.now()
+
+          // Cleanup function to prevent memory leaks
+          const cleanup = () => {
+            if (timeoutId) {
+              clearTimeout(timeoutId)
+              timeoutId = null
+            }
+            if (intervalId) {
+              clearInterval(intervalId)
+              intervalId = null
+            }
+          }
+
+          // Set up timeout to prevent infinite waiting
+          timeoutId = setTimeout(() => {
+            cleanup()
+            reject(new Error(`readyForPDF timeout after ${timeoutMs}ms`))
+          }, timeoutMs)
+
+          // Use setInterval instead of recursive setTimeout for better performance
+          intervalId = setInterval(() => {
+            if (readyForPDF) {
+              cleanup()
+              resolve(true)
+            } else {
+              // Additional safety check for elapsed time
+              const elapsed = Date.now() - startTime
+              if (elapsed >= timeoutMs) {
+                cleanup()
+                reject(new Error(`readyForPDF timeout after ${elapsed}ms`))
+              }
+            }
+          }, 100)
+        })
+      }
+
+      // Create the map variable (will be initialized in Vue)
+      let map
+      let readyForPDF = false
+
+      // Expose map and readyForPDFFunc to global scope for PDF generation
+      window.readyForPDFFunc = readyForPDFFunc
+
+      // Create a map view
+      const view = new ol.View({
+        center: [665690, 6237500],
+        extent: extent,
+        projection: 'EPSG:25832', // Use EPSG:25832 for Danish data
+        zoom: 1
+      })
+
+      map = new ol.Map({
+        target: 'map',
+        layers: [],
+        view: view
+      })
+
+      // Expose map to global scope for PDF generation
+      window.map = map
+
+      // Initialize the map after Vue is mounted to ensure DOM is ready
+      loadLayersFromCatalog()
+        .then(() => {
+          loadProjectGeometry().then(() => {
+            if (map && map.getView() && map.getLayers().getLength() > 0) {
+              // Wait for the next render complete event to ensure all layers are loaded
+              map.once('rendercomplete', () => {
+                readyForPDF = true
+              })
+
+              // Force a re-render to trigger the event
+              map.getView().changed()
+            } else {
+              // If map isn't ready yet, wait a bit and try again
+              setTimeout(() => {
+                readyForPDF().then(resolve)
+              }, 100)
+            }
+          })
+        })
+        .catch((error) => {
+          const errorMsg = `Fejl ved indlæsning af lag: ${error.message}`
+          showMapError(errorMsg)
+        })
+    </script>
+
+    <style type="text/css">
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        #app {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Map styles */
+        .map-container {
+            width: 100%;
+        }
+
+        #map {
+            width: 100%;
+            height: 300px;
+        }
+
+        .ol-zoom {
+            display: none;
+        }
+
+        /* Info section styles */
+        .info-section {
+            margin-top: 1rem;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-item {
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+
+        .info-item strong {
+            font-weight: 600;
+            color: #212529;
+        }
+
+        .detail-section {
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            margin-bottom: 1rem;
+        }
+
+        h4 {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Table styles */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0.5rem;
+        }
+
+            .table th,
+            .table td {
+                padding: 8px 12px;
+                text-align: left;
+                border: 1px solid #ddd;
+            }
+
+            .table th {
+                background-color: #f8f9fa;
+                font-weight: 600;
+                color: #212529;
+            }
+
+            .table tbody tr:nth-child(even) {
+                background-color: #f8f9fa;
+            }
+
+            .table tbody tr:hover {
+                background-color: #e9ecef;
+            }
+
+        /* Error container styles */
+        .error-container {
+            margin: 1rem 20px;
+            padding: 1rem;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 6px;
+            color: #721c24;
+        }
+
+        .error-message {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+            .error-message strong {
+                color: #721c24;
+            }
+
+        .ol-zoom {
+            display: none;
+        }
+    </style>
+</body>
+</html>
