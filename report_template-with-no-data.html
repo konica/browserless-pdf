@@ -135,6 +135,23 @@
             </table>
           </div>
         </div>
+        <div class="crops-table">
+          <h4>Crops</h4>
+          <div class="detail-section">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Afgroede</th>
+                  <th>Mark nummer</th>
+                  <th>Areal</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{ReportCropsMatriker}}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </section>
     </section>
   </div>
@@ -567,7 +584,7 @@
       page-break-before: always;
     }
 
-    .urot-skov-table {
+    .urot-skov-table, .crops-table {
       margin-top: 1rem;
     }
   </style>

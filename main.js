@@ -2,7 +2,8 @@ import fs from "fs/promises";
 import 'dotenv/config';
 
 // const TOKEN = process.env.BROWSERLESS_TOKEN;
-const TOKEN = "2Sh7jVShj9uozba57224100cc67756782691204daf7aad5db";
+// const TOKEN = "2Sh7jVShj9uozba57224100cc67756782691204daf7aad5db";
+const TOKEN = "4b81bfe5-e987-4515-bf87-65f662d08c75";
 if (!TOKEN) {
   console.error("Error: BROWSERLESS_TOKEN environment variable is not set");
   process.exit(1);
